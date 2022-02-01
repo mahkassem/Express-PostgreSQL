@@ -9,6 +9,8 @@
         "dev": "nodemon src/app.ts --watch",
         "lint": "eslint --ext .ts src",
         "build": "npx tsc",
+        "db:up": "db-migrate up",
+        "db:down": "db-migrate reset",
         "prettier": "npx prettier --write ./src/**/*.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

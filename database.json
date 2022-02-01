@@ -16,5 +16,23 @@
         "port": {
             "ENV": "POSTGRES_PORT"
         }
+    },
+    "test": {
+        "driver": "pg",
+        "user": {
+            "ENV": "POSTGRES_USER"
+        },
+        "password": {
+            "ENV": "POSTGRES_PASSWORD"
+        },
+        "host": {
+            "ENV": "POSTGRES_HOST"
+        },
+        "database": {
+            "ENV": "POSTGRES_TEST_DB"
+        },
+        "port": {
+            "ENV": "POSTGRES_PORT"
+        }
     }
 }
