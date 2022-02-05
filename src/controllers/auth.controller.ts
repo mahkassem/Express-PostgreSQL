@@ -1,15 +1,17 @@
 import { Request, Response } from 'express'
-import { authenticate, registerUser } from '../services/auth.service'
+import AuthService from '../services/auth.service'
 /**
  * login request
  * @param username: string
  * @param password: string
  * @returns {Promise<AuthObject>}
  */
+
+const _service = AuthService
 export default class AuthController {
   static login = async (req: Request, res: Response) => {
     try {
-      const authenticatedUser = await authenticate(req)
+      const authenticatedUser = await _service.login(req)
       if (authenticatedUser) {
         res.send({
           message: 'User logged in successfully',
@@ -33,7 +35,7 @@ export default class AuthController {
 
   static register = async (req: Request, res: Response) => {
     try {
-      const registeredUser = await registerUser(req)
+      const registeredUser = await _service.register(req)
       if (registeredUser) {
         res.send({
           message: 'User registered successfully',
