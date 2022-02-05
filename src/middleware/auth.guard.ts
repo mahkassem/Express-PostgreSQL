@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
 import UserRepository from '../repositories/user.repository'
 import { User } from '../models/user.model'
+import appConf from '../config/app.config'
 
-dotenv.config()
-const jwtSecret = process.env.JWT_SECRET
+const jwtSecret = appConf.jwtSecret
 
-const store = UserRepository
+const _repo = UserRepository
 
 export const authorized = async (
   req: Request,
@@ -17,7 +16,7 @@ export const authorized = async (
   try {
     // Get token from header
     const authorizationHeader = req.headers.authorization as string
-    const token = authorizationHeader.split(' ')[1]
+    const token = authorizationHeader.split(' ')[1] // [0: 'Bearer', 1:'<token>']
 
     // Check if token is valid
     const isValidJwt = jwt.verify(token, jwtSecret as string)
@@ -30,7 +29,7 @@ export const authorized = async (
     const payload = jwt.decode(token)
 
     // Check if user exists
-    const user: User = await store.findByUsername(payload?.sub as string)
+    const user: User = await _repo.findByUsername(payload?.sub as string)
     if (!user) throw new Error()
 
     // Continue to request

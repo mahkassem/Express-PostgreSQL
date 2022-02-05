@@ -4,14 +4,17 @@ import UserRepository from '../repositories/user.repository'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { hidePassword } from '../utils/sanitizer'
+import { AuthObject } from '../models/user.model'
 
 const _repo = UserRepository
 
 export default class AuthService {
   // login request
-  static login = async (req: Request) => {
+  static login = async (req: Request): Promise<AuthObject | null> => {
+    // get parameters from request body
     const { username, password } = req.body
 
+    // get user by user name
     const user = await _repo.findByUsername(username)
 
     if (!user) {
@@ -29,7 +32,7 @@ export default class AuthService {
 
     return {
       token: jwt.sign({ sub: username }, appConf.jwtSecret as string, {
-        expiresIn: '1m',
+        expiresIn: '180d',
       }),
       user: hidePassword(user),
     }

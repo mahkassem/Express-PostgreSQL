@@ -39,9 +39,10 @@ export default class UserRepository {
    * @returns {Promise<User>}
    */
   static async create(user: User): Promise<User> {
+    const { username, first_name, last_name, password } = user
     const result = await DB.query(
       'INSERT INTO users (username, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING *',
-      [user.username, user.first_name, user.last_name, user.password]
+      [username, first_name, last_name, password]
     )
     return result.rows[0]
   }
@@ -52,9 +53,10 @@ export default class UserRepository {
    * @returns {Promise<User>}
    */
   static async update(user: User): Promise<User> {
+    const { id, username, first_name, last_name, password } = user
     const result = await DB.query(
       'UPDATE users SET username = $1, first_name = $2, last_name = $3, password = $4 WHERE id = $5 RETURNING *',
-      [user.username, user.first_name, user.last_name, user.password, user.id]
+      [username, first_name, last_name, password, id]
     )
     return result.rows[0]
   }

@@ -32,6 +32,7 @@
         "db-migrate-pg": "^1.2.2",
         "dotenv": "^14.3.2",
         "express": "^4.17.2",
+        "jsonwebtoken": "^8.5.1",
         "helmet": "^5.0.2",
         "pg": "^8.7.1"
     },
@@ -44,7 +45,6 @@
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
         "eslint": "^8.8.0",
-        "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.15",
         "prettier": "2.5.1",
