@@ -4,8 +4,18 @@ import auth from './auth.routes'
 
 const appRouter = express.Router()
 
+/**
+ * * auth routes
+ */
 appRouter.use('/auth', auth)
 
+/**
+ * * authorized request
+ * ! This route is protected by auth.guard
+ * @header Authorization: Bearer <token>
+ * @returns string
+ * ? Use this route to get test a token
+ */
 appRouter.get(
   '/secure',
   authorized,

@@ -7,6 +7,14 @@ import {
 
 const authRoute = express.Router()
 
+/**
+ * * login request
+ * @param username: string
+ * @param password: string
+ * @returns AuthObject
+ * @throws {Error} 401: Unauthorized
+ * @throws {Error} 422: UnprocessableEntity
+ */
 authRoute.post(
   '/login',
   validateLoginRequest,
@@ -15,6 +23,12 @@ authRoute.post(
   }
 )
 
+/**
+ * * register request
+ * @param user: User
+ * @returns User
+ * @throws {Error} 422: Unprocessable entity
+ */
 authRoute.post(
   '/register',
   validateRegisterRequest,
