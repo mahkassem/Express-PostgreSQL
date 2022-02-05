@@ -34,5 +34,6 @@
         "port": {
             "ENV": "POSTGRES_PORT"
         }
-    }
+    },
+    "sql-file": true
 }

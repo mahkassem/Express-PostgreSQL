@@ -1,1 +1,6 @@
-
+{
+    "semi": false,
+    "singleQuote": true,
+    "endOfLine": "crlf",
+    "tabWidth": 2
+}
