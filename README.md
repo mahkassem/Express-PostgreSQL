@@ -2,7 +2,7 @@
 
 ![JWT](https://jwt.io/img/badge-compatible.svg "JWT Compatible")
 
-Learn how to use PostgreSQL with Node JS using express server.
+Learn how to use PostgreSQL with Node JS using express server with JWT authentication.
 
 ## Requirments
 
