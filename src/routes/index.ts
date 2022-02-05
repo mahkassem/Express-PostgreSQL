@@ -6,8 +6,12 @@ const appRouter = express.Router()
 
 appRouter.use('/auth', auth)
 
-appRouter.get('/secure', authorized, (req: express.Request, res: express.Response) => {
+appRouter.get(
+  '/secure',
+  authorized,
+  (req: express.Request, res: express.Response) => {
     res.send('Hello from secure route')
-})
+  }
+)
 
 export default appRouter
