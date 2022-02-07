@@ -4,7 +4,7 @@ import UserRepository from '../repositories/user.repository'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { hidePassword } from '../utils/sanitizer'
-import { AuthObject } from '../models/user.model'
+import { AuthObject, User } from '../models/user.model'
 
 const _repo = UserRepository
 
@@ -14,13 +14,15 @@ export default class AuthService {
     // get parameters from request body
     const { username, password } = req.body
 
-    // get user by user name
+    // 1. get user by username
     const user = await _repo.findByUsername(username)
 
+    // 2. verify user exists
     if (!user) {
       return null
     }
 
+    // 3. comapre passwords
     const isMatch = bcrypt.compareSync(
       password + appConf.bcryptPaper,
       user.password as string
@@ -30,27 +32,38 @@ export default class AuthService {
       return null
     }
 
-    return {
-      token: jwt.sign({ sub: username }, appConf.jwtSecret as string, {
-        expiresIn: '180d',
-      }),
-      user: hidePassword(user),
-    }
+    // 4 + 5: generate and send token to user
+    return generateAuthObject(user)
   }
 
   // register user
   static register = async (req: Request) => {
     const user = req.body
 
+    // generate a password hash
     const hashedPassword = bcrypt.hashSync(
       user.password + appConf.bcryptPaper,
       appConf.bcryptSalt
     )
 
+    // assign hash value to the user object
     user.password = hashedPassword
 
     const createdUser = await _repo.create(user)
 
-    return hidePassword(createdUser)
+    return generateAuthObject(createdUser)
+  }
+}
+
+const generateAuthObject = (user: User): AuthObject => {
+  const generatedToken =
+    jwt.sign(
+      { sub: user.username, name: `${user.first_name} ${user.last_name}` },
+      appConf.jwtSecret as string,
+      { expiresIn: '1m', }
+    )
+  return {
+    token: generatedToken,
+    user: hidePassword(user),
   }
 }

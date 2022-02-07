@@ -14,7 +14,7 @@ appRouter.use('/auth', auth)
  * ! This route is protected by auth.guard
  * @header Authorization: Bearer <token>
  * @returns string
- * ? Use this route to get test a token
+ * ? Use this route to test a token
  */
 appRouter.get(
   '/secure',

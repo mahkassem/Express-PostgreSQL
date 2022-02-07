@@ -6,9 +6,12 @@ import {
 } from '../validators/auth.validators'
 
 const authRoute = express.Router()
+const _controller = AuthController
 
 /**
  * * login request
+ * @method Post
+ * @dataType body json
  * @param username: string
  * @param password: string
  * @returns AuthObject
@@ -19,12 +22,13 @@ authRoute.post(
   '/login',
   validateLoginRequest,
   (req: Request, res: Response) => {
-    AuthController.login(req, res)
+    _controller.login(req, res)
   }
 )
 
 /**
  * * register request
+ * @method Post
  * @param user: User
  * @returns User
  * @throws {Error} 422: Unprocessable entity
@@ -33,7 +37,7 @@ authRoute.post(
   '/register',
   validateRegisterRequest,
   (req: Request, res: Response) => {
-    AuthController.register(req, res)
+    _controller.register(req, res)
   }
 )
 

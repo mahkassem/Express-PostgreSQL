@@ -1,14 +1,11 @@
 import { Request, Response } from 'express'
 import AuthService from '../services/auth.service'
-/**
- * login request
- * @param username: string
- * @param password: string
- * @returns {Promise<AuthObject>}
- */
 
 const _service = AuthService
 export default class AuthController {
+  /**
+  * * login
+  */
   static login = async (req: Request, res: Response) => {
     try {
       const authenticatedUser = await _service.login(req)
@@ -33,6 +30,9 @@ export default class AuthController {
     }
   }
 
+  /**
+  * * register
+  */
   static register = async (req: Request, res: Response) => {
     try {
       const registeredUser = await _service.register(req)
