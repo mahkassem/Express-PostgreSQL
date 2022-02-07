@@ -5,9 +5,10 @@ export interface IRepository<T> {
     singleAsync(id: number, column: string): Promise<T>
     deleteAsync(id: number): Promise<boolean>
 }
+
 type BaseRepository<T> = IRepository<T>
 
-export abstract class Repository<T> implements BaseRepository<T> {
+export default abstract class Repository<T> implements BaseRepository<T> {
 
     constructor(
         public table: string

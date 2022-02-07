@@ -1,6 +1,6 @@
 import DB from '../database'
 import { User } from '../models/user.model'
-import { Repository } from './base.repository'
+import Repository from './base.repository'
 import dbContext from './db-context'
 
 export default class UserRepository extends Repository<User> {
