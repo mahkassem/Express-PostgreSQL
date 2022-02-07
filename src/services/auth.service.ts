@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 import { hidePassword } from '../utils/sanitizer'
 import { AuthObject } from '../models/user.model'
 
-const _repo = UserRepository
+const _repo = new UserRepository()
 
 export default class AuthService {
   // login request
@@ -15,7 +15,7 @@ export default class AuthService {
     const { username, password } = req.body
 
     // get user by user name
-    const user = await _repo.findByUsername(username)
+    const user = await _repo.singleAsync(username)
 
     if (!user) {
       return null
@@ -49,7 +49,7 @@ export default class AuthService {
 
     user.password = hashedPassword
 
-    const createdUser = await _repo.create(user)
+    const createdUser = await _repo.createAsync(user)
 
     return hidePassword(createdUser)
   }
