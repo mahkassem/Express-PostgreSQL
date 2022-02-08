@@ -30,7 +30,10 @@ export const authorized = async (
 
     // Check if user exists
     const user: User = await _repo.findByUsername(payload?.sub as string)
-    if (!user) throw new Error()
+    if (!user) throw new Error('No user exists')
+
+    // if user.role = admin
+    // 403 Unauthorized
 
     // Continue to request
     next()
