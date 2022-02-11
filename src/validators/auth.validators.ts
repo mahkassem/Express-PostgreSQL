@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import UserRepository from '../repositories/user.repository'
 
+const _repo = new UserRepository()
+
 // validate login request
 const validateLoginRequest = (
   req: Request,
@@ -44,7 +46,7 @@ const validateRegisterRequest = async (
     errorsBag.push('Username is required')
   } else {
     // check if username is already taken
-    if (await UserRepository.findByUsername(username)) {
+    if (await _repo.singleAsync(username)) {
       errorsBag.push('Username is already taken')
     }
 

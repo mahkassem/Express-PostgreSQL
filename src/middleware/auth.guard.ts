@@ -5,8 +5,7 @@ import { User } from '../models/user.model'
 import appConf from '../config/app.config'
 
 const jwtSecret = appConf.jwtSecret
-
-const _repo = UserRepository
+const _repo = new UserRepository()
 
 export const authorized = async (
   req: Request,
@@ -29,11 +28,8 @@ export const authorized = async (
     const payload = jwt.decode(token)
 
     // Check if user exists
-    const user: User = await _repo.findByUsername(payload?.sub as string)
-    if (!user) throw new Error('No user exists')
-
-    // if user.role = admin
-    // 403 Unauthorized
+    const user: User = await _repo.singleAsync(payload?.sub as string)
+    if (!user) throw new Error()
 
     // Continue to request
     next()
