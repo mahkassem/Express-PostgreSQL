@@ -20,6 +20,7 @@ export default class PostRepository extends Repository<Post> {
         a.id,
         a.title,
         a.body,
+        b.id AS author_id,
         CONCAT_WS(' ',b.first_name,b.last_name) AS author,
         a.created_at
         FROM posts a

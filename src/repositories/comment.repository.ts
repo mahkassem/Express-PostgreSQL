@@ -19,7 +19,8 @@ export default class CommentRepository extends Repository<Comment> {
       SELECT 
         a.id,
         a.body,
-        CONCAT_WS(' ',b.first_name,b.last_name) AS author,
+        b.id AS user_id,
+        CONCAT_WS(' ',b.first_name,b.last_name) AS user,
         a.created_at 
         FROM comments a
         JOIN users b ON b.id = a.user_id 

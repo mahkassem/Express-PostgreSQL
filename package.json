@@ -12,7 +12,7 @@
         "db:up": "db-migrate up",
         "db:down": "db-migrate reset",
         "prettier": "npx prettier --write ./src/**/*.ts",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "npm run build&&set ENVIRONMENT=test&&db-migrate --env test up&&jasmine&&db-migrate --env test reset"
     },
     "keywords": [
         "express",
@@ -31,20 +31,23 @@
         "db-migrate-pg": "^1.2.2",
         "dotenv": "^14.3.2",
         "express": "^4.17.2",
-        "jsonwebtoken": "^8.5.1",
         "helmet": "^5.0.2",
+        "jsonwebtoken": "^8.5.1",
         "pg": "^8.7.1"
     },
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",
+        "@types/jasmine": "^3.10.3",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
         "@types/pg": "^8.6.4",
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
         "eslint": "^8.8.0",
+        "jasmine": "^4.0.2",
+        "jasmine-spec-reporter": "^7.0.0",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.15",
         "prettier": "2.5.1",
