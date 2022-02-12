@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 import UserRepository from '../repositories/user.repository'
 import { User } from '../models/user.model'
 import appConf from '../config/app.config'
+import { hidePassword } from '../utils/sanitizer'
+import { unauthorizedResponse } from '../utils/response'
 
 const jwtSecret = appConf.jwtSecret
 const _repo = new UserRepository()
@@ -31,11 +33,11 @@ export const authorized = async (
     const user: User = await _repo.singleAsync(payload?.sub as string)
     if (!user) throw new Error()
 
+    res.locals.user = hidePassword(user)
+
     // Continue to request
     next()
   } catch (error) {
-    res.status(401).json({
-      message: error ? error : 'Unauthorized',
-    })
+    return unauthorizedResponse(res)
   }
 }

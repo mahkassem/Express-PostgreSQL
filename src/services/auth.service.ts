@@ -1,5 +1,5 @@
 import appConf from '../config/app.config'
-import { Request } from 'express'
+import { Request, Response } from 'express'
 import UserRepository from '../repositories/user.repository'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -60,10 +60,15 @@ const generateAuthObject = (user: User): AuthObject => {
     jwt.sign(
       { sub: user.username, name: `${user.first_name} ${user.last_name}` },
       appConf.jwtSecret as string,
-      { expiresIn: '1m' }
+      { expiresIn: '30d' }
     )
   return {
     token: generatedToken,
     user: hidePassword(user),
   }
 }
+
+// get function
+
+export const authUser = (res: Response) => res.locals.user
+

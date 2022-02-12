@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import AuthController from '../controllers/auth.controller'
 import {
   validateLoginRequest,
@@ -10,7 +10,7 @@ const _controller = AuthController
 
 /**
  * * login request
- * @method Post
+ * @method POST
  * @dataType body json
  * @param username: string
  * @param password: string
@@ -19,26 +19,22 @@ const _controller = AuthController
  * @throws {Error} 422: UnprocessableEntity
  */
 authRoute.post(
-  '/login',
-  validateLoginRequest,
-  (req: Request, res: Response) => {
-    _controller.login(req, res)
-  }
+  '/login', // * path
+  validateLoginRequest, // ! validation
+  _controller.login // ? controller
 )
 
 /**
  * * register request
- * @method Post
+ * @method POST
  * @param user: User
  * @returns User
  * @throws {Error} 422: Unprocessable entity
  */
 authRoute.post(
-  '/register',
-  validateRegisterRequest,
-  (req: Request, res: Response) => {
-    _controller.register(req, res)
-  }
+  '/register', // * path
+  validateRegisterRequest, // ! validation
+  _controller.register // ? controller
 )
 
 export default authRoute

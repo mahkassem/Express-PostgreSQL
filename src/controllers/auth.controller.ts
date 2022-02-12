@@ -1,5 +1,11 @@
 import { Request, Response } from 'express'
 import AuthService from '../services/auth.service'
+import {
+  internalServerErrorResponse,
+  resourceCreatedResponse,
+  successResponse,
+  unauthorizedCredentialsResponse
+} from '../utils/response'
 
 const _service = AuthService
 export default class AuthController {
@@ -10,23 +16,12 @@ export default class AuthController {
     try {
       const authenticatedUser = await _service.login(req)
       if (authenticatedUser) {
-        res.send({
-          message: 'User logged in successfully',
-          data: authenticatedUser,
-        })
+        return successResponse(res, authenticatedUser, 'Login successful')
       } else {
-        res
-          .send({
-            message: 'Unable to login',
-            error: 'Invalid credentials',
-          })
-          .status(401)
+        return unauthorizedCredentialsResponse(res)
       }
     } catch (error) {
-      res.status(500).send({
-        message: 'Internal server error',
-        error: (error ?? null) as string,
-      })
+      return internalServerErrorResponse(res, error)
     }
   }
 
@@ -37,18 +32,12 @@ export default class AuthController {
     try {
       const registeredUser = await _service.register(req)
       if (registeredUser) {
-        res.send({
-          message: 'User registered successfully',
-          data: registeredUser,
-        })
+        return resourceCreatedResponse(res, registeredUser)
       } else {
         throw new Error('Unable to register user')
       }
     } catch (error) {
-      res.status(500).send({
-        message: 'Internal server error',
-        error: (error ?? null) as string,
-      })
+      return internalServerErrorResponse(res, error)
     }
   }
 }

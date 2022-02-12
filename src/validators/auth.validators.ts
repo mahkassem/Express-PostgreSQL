@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import UserRepository from '../repositories/user.repository'
+import { unprocessableEntityResponse } from '../utils/response'
 
 const _repo = new UserRepository()
 
@@ -21,15 +22,9 @@ const validateLoginRequest = (
     errorsBag.push('Password is required')
   }
 
-  if (errorsBag.length > 0) {
-    res.status(422).json({
-      message: 'Invalid input',
-      errors: errorsBag,
-    })
-    return
-  }
-
-  next()
+  return errorsBag.length > 0 ?
+    unprocessableEntityResponse(res, errorsBag)
+    : next()
 }
 
 // validate register request
@@ -104,15 +99,9 @@ const validateRegisterRequest = async (
     }
   }
 
-  if (errorsBag.length > 0) {
-    res.status(422).json({
-      message: 'Invalid input',
-      errors: errorsBag,
-    })
-    return
-  }
-
-  next()
+  return errorsBag.length > 0 ?
+    unprocessableEntityResponse(res, errorsBag)
+    : next()
 }
 
 export { validateLoginRequest, validateRegisterRequest }
