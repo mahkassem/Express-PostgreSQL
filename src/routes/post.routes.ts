@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import PostController from '../controllers/post.controller'
 import { authorized } from '../middleware/auth.guard'
 import {
@@ -22,14 +22,13 @@ postRoute.get(
 /** 
  * * get single post
  * @method GET
- * @param {string} id
+ * @param {number} id
  * @returns {Post}
  */
 postRoute.get(
     '/:id', // * path
     _controller.single // ? controller
 )
-
 
 /**
  * * create request

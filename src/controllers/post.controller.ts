@@ -45,7 +45,7 @@ export default class PostController {
   /**
   * * create
   */
-  static create = async (req: Request, res: Response) => {
+  static create = async (req: Request, res: Response): Promise<void> => {
     try {
       const createdPost = await _service.create(req, res)
       if (createdPost) {

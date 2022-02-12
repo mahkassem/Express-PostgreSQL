@@ -24,7 +24,6 @@ describe('Post repository', () => {
 
     it('Create a post', async () => {
         const post: Post = {
-            id: 1,
             user_id,
             title: 'Example test blog title',
             body: 'The Controller is responsible for controlling the application logic and acts as the coordinator between the View and the Model. The Controller receives an input from the users via the View, then processes the user\'s data with the help of Model and passes the results back to the View. In the MVC Framework, controller classes must implement the IController interface from the System.Web.Mvc namespace. MVC Controllers are responsible for controlling the flow of the application execution.',
@@ -33,6 +32,7 @@ describe('Post repository', () => {
         const createdPost = await _repo.createAsync(post)
 
         // remove auto generated data
+        delete createdPost.id
         delete createdPost.created_at
 
         expect(createdPost).toEqual(post)

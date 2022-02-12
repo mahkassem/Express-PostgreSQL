@@ -31,7 +31,7 @@ export default abstract class Repository<T> implements BaseRepository<T> {
     /**
      * get model by id
      * @param {number} id || @param {string} username
-     * @returns {Promise<T>}
+     * @returns {Promise<T>} // {title}
      */
     async singleAsync(value: number | string | object): Promise<T> {
         const column =
@@ -51,7 +51,11 @@ export default abstract class Repository<T> implements BaseRepository<T> {
      * @returns {Promise<T>}
      */
     async createAsync(model: Partial<T>): Promise<T> {
-        const queryText = `INSERT INTO ${this.table} (${Object.keys(model).join(', ')}) VALUES (${Object.keys(model).map((value, index) => `$${index + 1}`).join(', ')}) RETURNING *`
+        const queryText = `INSERT INTO ${this.table} 
+        (${Object.keys(model).join(', ')}) 
+        VALUES 
+        (${Object.keys(model).map((value, index) => `$${index + 1}`).join(', ')}) 
+        RETURNING *`
         const result = await DB.query(queryText, Object.values(model))
         return result.rows[0]
     }
@@ -63,10 +67,11 @@ export default abstract class Repository<T> implements BaseRepository<T> {
      * @returns {Promise<T>}
      */
     async updateAsync(model: Partial<T>): Promise<T> {
-        const id = Object.keys(model).find(key => key == 'id')
         const columns = Object.keys(model).filter(key => key != 'id')
         const values = Object.values(model)
-        const queryText = `UPDATE ${this.table} SET ${columns.map((column, index) => `${column} = $${index + 2}`).join(', ')} WHERE id = $1 RETURNING *`
+        const queryText = `UPDATE ${this.table} 
+                            SET ${columns.map((column, index) => `${column} = $${index + 2}`).join(', ')} 
+                            WHERE id = $1 RETURNING *`
         const result = await DB.query(queryText, values)
         return result.rows[0]
     }

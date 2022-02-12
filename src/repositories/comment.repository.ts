@@ -17,15 +17,12 @@ export default class CommentRepository extends Repository<Comment> {
     // comments with user
     const comments = await DB.query(`
       SELECT 
-        a.id,
-        a.body,
-        b.id AS user_id,
-        CONCAT_WS(' ',b.first_name,b.last_name) AS user,
-        a.created_at 
-        FROM comments a
-        JOIN users b ON b.id = a.user_id 
-        WHERE a.post_id = $1
-        ORDER BY a.created_at DESC
+      c.id, c.body, c.created_at,
+      u.id, CONCAT_WS(' ', u.first_name, u.last_name) AS name 
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1
+      ORDER BY c.created_at DESC
     `, [post_id]).catch(err => console.log(err))
     return comments?.rows ?? []
   }
