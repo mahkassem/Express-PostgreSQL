@@ -9,6 +9,7 @@ export default class UserRepository extends Repository<User> {
     super('')
     this.table = dbContext.users
   }
+  
   /**
    * create new user
    * @param {User} user

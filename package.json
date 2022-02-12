@@ -11,6 +11,7 @@
         "build": "npx tsc",
         "db:up": "db-migrate up",
         "db:down": "db-migrate reset",
+        "db:seed": "npm run build&&node build/utils/seeders/db.seeder.js",
         "prettier": "npx prettier --write ./src/**/*.ts",
         "test": "npm run build&&set ENVIRONMENT=test&&db-migrate --env test up&&jasmine&&db-migrate --env test reset"
     },
