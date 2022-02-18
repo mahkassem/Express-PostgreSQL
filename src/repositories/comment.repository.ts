@@ -18,7 +18,7 @@ export default class CommentRepository extends Repository<Comment> {
     const comments = await DB.query(`
       SELECT 
       c.id, c.body, c.created_at,
-      u.id, CONCAT_WS(' ', u.first_name, u.last_name) AS name 
+      u.id, CONCAT_WS(' ', u.first_name, u.last_name) AS author 
       FROM comments c 
       JOIN users u ON c.user_id = u.id 
       WHERE c.post_id = $1

@@ -18,7 +18,7 @@ const validateCreateRequest = async (
     errorsBag.push('Title is required')
   } else {
     // check if title is already taken
-    if (await _repo.singleAsync({ title: title })) {
+    if (await _repo.singleAsync({ title })) {
       errorsBag.push('Title is already taken')
     }
 
@@ -61,7 +61,7 @@ const validateUpdateRequest = async (
     errorsBag.push('Title is required')
   } else {
     // check if title is already taken
-    const post = await _repo.singleAsync({ title: title })
+    const post = await _repo.singleAsync({ title })
     if (post && post.id !== id && post.title === title) {
       errorsBag.push('Title is already taken')
     }

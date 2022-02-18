@@ -17,15 +17,11 @@ export default class PostRepository extends Repository<Post> {
     // post with user
     const post = await DB.query(`
       SELECT
-        a.id,
-        a.title,
-        a.body,
-        b.id AS author_id,
-        CONCAT_WS(' ',b.first_name,b.last_name) AS author,
-        a.created_at
-        FROM posts a
-        JOIN users b ON b.id = a.user_id
-        WHERE a.id = $1
+      p.id, p.title, p.body,
+      u.id, CONCAT_WS(' ', u.first_name, u.last_name) AS author
+      FROM posts p
+      JOIN users u ON u.id = p.user_id
+      WHERE p.id = $1
     `, [id]).catch(err => console.log(err))
     return post?.rows[0] ?? null
   }

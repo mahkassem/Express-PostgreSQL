@@ -34,6 +34,7 @@
         "express": "^4.17.2",
         "helmet": "^5.0.2",
         "jsonwebtoken": "^8.5.1",
+        "nodemailer": "^6.7.2",
         "pg": "^8.7.1"
     },
     "devDependencies": {
@@ -43,6 +44,7 @@
         "@types/jasmine": "^3.10.3",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
+        "@types/nodemailer": "^6.4.4",
         "@types/pg": "^8.6.4",
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",

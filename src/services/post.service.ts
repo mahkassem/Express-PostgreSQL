@@ -6,6 +6,10 @@ const _repo = new PostRepository()
 
 export default class PostService {
 
+    /**
+     * Get all posts
+     * @returns {Promise<Post[]>}
+     */
     static index = async (): Promise<Post[]> => {
         const posts = await _repo.postsWithUserAsync()
         return posts

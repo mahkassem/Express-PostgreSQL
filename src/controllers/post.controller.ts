@@ -8,8 +8,10 @@ import {
   resourceUpdatedResponse,
   successResponse
 } from '../utils/response'
+import { MailService } from '../services/mail.service'
 
 const _service = PostService
+const _mailService = MailService
 const _commentService = CommentService
 export default class PostController {
 
@@ -49,6 +51,8 @@ export default class PostController {
     try {
       const createdPost = await _service.create(req, res)
       if (createdPost) {
+        // send email
+        await _mailService.newPostAlert(createdPost)
         return resourceCreatedResponse(res, createdPost)
       } else {
         throw new Error('Unable to create resource')
@@ -59,7 +63,7 @@ export default class PostController {
   }
 
   /**
-  * * update
+  * * update //
   */
   static update = async (req: Request, res: Response) => {
     try {

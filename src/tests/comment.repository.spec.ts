@@ -13,7 +13,7 @@ describe('Comments', () => {
         const user = await _userRepo.createAsync({
             first_name: 'test',
             last_name: 'test',
-            username: 'test',
+            username: 'test1',
             password: 'test'
         })
         user_id = user.id
