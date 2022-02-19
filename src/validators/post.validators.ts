@@ -37,7 +37,7 @@ const validateCreateRequest = async (
     if (!req.files.image) {
       errorsBag.push('Image cannot be empty')
     } else {
-      const { image } = req.files as unknown as { image?: UploadedFile }
+      const { image } = req.files as { image?: UploadedFile }
       if (image) {
         if (!image.name) {
           errorsBag.push('Invalid image')

@@ -35,7 +35,7 @@ export default class PostService {
         const user = res.locals.user // get authenticated user
         post.user_id = user.id
         if (req.files) {
-            const { image } = req.files as unknown as { image?: UploadedFile }
+            const { image } = req.files as { image?: UploadedFile }
             if (image) {
                 const savedFile = await _fileService.uploadSingleAsync(image) // upload file
                 post.image_url = savedFile
