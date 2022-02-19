@@ -16,7 +16,8 @@ export default class PostService {
      */
     static index = async (req: Request): Promise<Post[] | IPaginatedResult<Post>> => {
         const paginate = validatedPagination(req) // get pagination params
-        const posts = await _repo.listAsync({ paginate, orderBy: { created_at: 'desc' } })
+        const orderBy = { created_at: 'desc' }
+        const posts = await _repo.listAsync({ paginate, orderBy })
         return posts
     }
 
