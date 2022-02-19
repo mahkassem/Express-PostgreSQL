@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { UploadedFile } from 'express-fileupload'
 import PostRepository from '../repositories/post.repository'
 import { unprocessableEntityResponse } from '../utils/response'
 
@@ -28,6 +29,28 @@ const validateCreateRequest = async (
 
     if (title.length > 255) {
       errorsBag.push('Title must be less than 255 characters long')
+    }
+  }
+
+
+  if (req.files) {
+    if (!req.files.image) {
+      errorsBag.push('Image cannot be empty')
+    } else {
+      const { image } = req.files as unknown as { image?: UploadedFile }
+      if (image) {
+        if (!image.name) {
+          errorsBag.push('Invalid image')
+        }
+
+        if (image.size > 5242880) {
+          errorsBag.push('Image must be less than 5MB')
+        }
+
+        if (!/^[image/(jpg|jpeg|png)]+$/.test(image.mimetype)) {
+          errorsBag.push('Invalid image type: ' + image.mimetype + '. Only jpg, jpeg and png are allowed')
+        }
+      }
     }
   }
 

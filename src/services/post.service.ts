@@ -33,10 +33,14 @@ export default class PostService {
     static create = async (req: Request, res: Response): Promise<Post | null> => {
         const post = req.body
         const user = res.locals.user // get authenticated user
-        const { image } = req.files as unknown as { image: UploadedFile }
         post.user_id = user.id
-        const savedFile = await _fileService.uploadSingleAsync(image) // upload file
-        post.image_url = savedFile
+        if (req.files) {
+            const { image } = req.files as unknown as { image?: UploadedFile }
+            if (image) {
+                const savedFile = await _fileService.uploadSingleAsync(image) // upload file
+                post.image_url = savedFile
+            }
+        }
         const createdPost = await _repo.createAsync(post) // create post
         return createdPost
     }
