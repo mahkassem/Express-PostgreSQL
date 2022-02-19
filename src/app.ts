@@ -10,8 +10,6 @@ const app: Application = express() // create an express application
 const port = appConf.port || 3000 // default port to listen
 const url = appConf.url // default url to listen
 
-console.log(appConf.storage)
-
 // enable files upload
 app.use(fileUpload({
   createParentPath: true, // create the parent path (default: false)
