@@ -8,10 +8,9 @@ import {
   resourceUpdatedResponse,
   successResponse
 } from '../utils/response'
-import { MailService } from '../services/mail.service'
+import _mailService from '../services/mail.service'
 
 const _service = PostService
-const _mailService = MailService
 const _commentService = CommentService
 export default class PostController {
 

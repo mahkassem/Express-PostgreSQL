@@ -43,7 +43,7 @@ const validateCreateRequest = async (
           errorsBag.push('Invalid image')
         }
 
-        if (image.size > 5242880) {
+        if (image.size > 5242880) { // 5MB
           errorsBag.push('Image must be less than 5MB')
         }
 

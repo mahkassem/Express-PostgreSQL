@@ -16,7 +16,8 @@ app.use(fileUpload({
   tempFileDir: '/tmp/', // temporary file directory
   limits: {
     fileSize: 50 * 1024 * 1024 // 50MB
-  }
+  },
+  debug: true
 }))
 
 // Defaul middlewares

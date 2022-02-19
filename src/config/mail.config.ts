@@ -8,8 +8,8 @@ const mailConfig = {
     port: process.env.MAIL_PORT,
     user: process.env.MAIL_USER,
     password: process.env.MAIL_PASSWORD,
-    debug: APP_ENV === 'dev',
-    logger: APP_ENV === 'dev',
+    debug: APP_ENV !== 'prod',
+    logger: APP_ENV !== 'prod',
 }
 
 export default mailConfig

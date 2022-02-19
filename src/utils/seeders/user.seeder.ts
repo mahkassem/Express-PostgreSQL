@@ -4,9 +4,9 @@ import DB from '../../database'
 const password = '$2b$10$px9.YtJb2iQH.vMSPR1sve2u4x7xJ5giCN9UyNyxSi93XVhi9qKk2' // Passw0rd@123
 
 const data: User[] = [
-    { first_name: 'Mahmoud', last_name: 'Kassem', username: 'mahmoud1', password },
-    { first_name: 'Seif', last_name: 'Ali', username: 'seifali1', password },
-    { first_name: 'Ali', last_name: 'Seif', username: 'aliseif1', password },
+    { first_name: 'Mahmoud', last_name: 'Kassem', username: 'mahmoud', password },
+    { first_name: 'Seif', last_name: 'Ali', username: 'seifali', password },
+    { first_name: 'Ali', last_name: 'Seif', username: 'aliseif', password },
 ]
 
 export default async function seed() {
