@@ -20,7 +20,7 @@ export default class PostController {
   */
   static index = async (req: Request, res: Response) => {
     try {
-      const posts = await _service.index()
+      const posts = await _service.index(req)
       return successResponse(res, posts)
     } catch (error) {
       return internalServerErrorResponse(res, error)

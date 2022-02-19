@@ -3,6 +3,8 @@ import PostRepository from '../repositories/post.repository'
 import { Post } from '../models/post.model'
 import FileService from '../services/file.service'
 import { UploadedFile } from 'express-fileupload'
+import { IPaginatedResult } from '../repositories/base.repository'
+import { validatedPagination } from '../validators/common.validators'
 
 const _repo = new PostRepository()
 const _fileService = FileService
@@ -12,8 +14,9 @@ export default class PostService {
      * Get all posts
      * @returns {Promise<Post[]>}
      */
-    static index = async (): Promise<Post[]> => {
-        const posts = await _repo.postsWithUserAsync()
+    static index = async (req: Request): Promise<Post[] | IPaginatedResult<Post>> => {
+        const paginate = validatedPagination(req) // get pagination params
+        const posts = await _repo.listAsync({ paginate, orderBy: { created_at: 'desc' } })
         return posts
     }
 

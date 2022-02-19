@@ -1,13 +1,26 @@
 import DB from '../database'
 
-interface IRepository<T> {
-    listAsync(): Promise<T[]>
+export interface IRepository<T> {
+    listAsync(): Promise<PaginatedResult<T> | T[]>
     singleAsync(id: number, column: string): Promise<T>
     deleteAsync(id: number): Promise<boolean>
 }
 
-type BaseRepository<T> = IRepository<T>
+export interface IPaginatedResult<T> {
+    model: T[]
+    page: number
+    pageSize: number
+}
 
+type BaseRepository<T> = IRepository<T>
+type PaginatedResult<T> = IPaginatedResult<T>
+interface Pagination {
+    page?: number
+    perPage?: number
+}
+interface OrderBy {
+    [key: string]: string
+}
 export default abstract class Repository<T> implements BaseRepository<T> {
 
     constructor(
@@ -18,10 +31,13 @@ export default abstract class Repository<T> implements BaseRepository<T> {
    * get all models
    * @returns {Promise<T[]>}
    */
-    async listAsync(filter?: object): Promise<T[]> {
-        const filterQuery = filter ? `WHERE ${Object.keys(filter)[0]} = '${Object.values(filter)[0]}'` : ''
-        const result = await DB.query(`SELECT * FROM ${this.table} ${filterQuery}`)
-        return result.rows
+    async listAsync(options?: { filter?: object, paginate?: Pagination, orderBy?: OrderBy }): Promise<PaginatedResult<T> | T[]> {
+        const orderByQuery = options?.orderBy ? `ORDER BY ${Object.keys(options.orderBy)[0]} ${Object.values(options.orderBy)[0] ?? 'ASC'}` : ''
+        const filterQuery = options?.filter ? `WHERE ${Object.keys(options.filter)[0]} = '${Object.values(options.filter)[0]}'` : ''
+        const paginateQuery = options?.paginate ? `LIMIT ${options.paginate.perPage ?? 10} OFFSET ${((options.paginate.page ?? 1) - 1) * (options.paginate.perPage || 10)}` : ''
+        const queryText = `SELECT * FROM ${this.table} ${filterQuery} ${orderByQuery} ${paginateQuery}`
+        const result = await DB.query(queryText)
+        return options?.paginate ? { model: result.rows, page: (options.paginate.page ?? 1), pageSize: (options.paginate.perPage ?? 10) } : result.rows
     }
 
     /**
