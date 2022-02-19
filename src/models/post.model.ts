@@ -1,6 +1,7 @@
 export interface Post {
     id?: number
     user_id?: number
+    image_url?: string
     title: string
     body: string
     author?: string
