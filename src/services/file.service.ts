@@ -1,12 +1,12 @@
 import { UploadedFile } from 'express-fileupload'
-import appConf from '../config/app.config'
+import storageConf from '../config/storage.config'
 
 export default class FileService {
 
     static uploadSingleAsync = async (file: UploadedFile): Promise<string> => {
         try {
             const timestamp = Date.now()
-            const uploadPath = `${appConf.storage}/posts/${timestamp}_${file.name}`
+            const uploadPath = `${storageConf.dir_location}/posts/${timestamp}_${file.name}`
             file.mv(uploadPath, () => {
                 console.log(`File uploaded to ${uploadPath}`)
             })
