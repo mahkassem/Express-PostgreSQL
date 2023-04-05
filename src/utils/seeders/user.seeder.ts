@@ -1,6 +1,7 @@
 import { User } from '../../models/user.model'
 import DB from '../../database'
 
+// TODO: use bcrypt to hash password uaing app secret
 const password = '$2b$10$px9.YtJb2iQH.vMSPR1sve2u4x7xJ5giCN9UyNyxSi93XVhi9qKk2' // Passw0rd@123
 
 const data: User[] = [
